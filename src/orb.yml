@@ -9,7 +9,7 @@ executors:
     docker:
     - image: alpine:latest
 
-commands:
+jobs:
   ansible-lint:
     description: Run ansible lint
     executor: default
@@ -22,7 +22,6 @@ commands:
     - run: 
         name: Install packages needed
         command: apk --no-cache add python3 ansible-lint
-    - checkout
     - run: 
         name: Check ansible lint version
         command: ansible-lint --version
