@@ -15,7 +15,6 @@ jobs:
     executor: default
     parameters:
       config:
-        default: ~/project
         description: Specify a custom ansible-lint config
         type: string
     steps:
