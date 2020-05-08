@@ -7,7 +7,7 @@ executors:
     description: |
       Custom Docker image with pre-packaged welcome orb commands
     docker:
-    - image: circleci/welcome-config-image:0.2.1
+    - image: alpine:latest
 
 jobs:
   ansible-lint:
@@ -20,6 +20,9 @@ jobs:
             needed if package.json lives in the root.
           type: string
     steps:
+    - run: 
+        name: Install packages needed
+        command: apk --no-cache add python3 ansible-lint
     - checkout
     - run: 
         name: Check ansible lint version
