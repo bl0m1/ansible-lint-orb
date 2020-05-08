@@ -17,6 +17,10 @@ jobs:
       config:
         description: Specify a custom ansible-lint config
         type: string
+      dir:
+        default: .
+        description: Specify in which  directory to run the lint
+        type: string
     steps:
     - run: 
         name: Install packages needed
@@ -27,4 +31,27 @@ jobs:
         command: ansible-lint --version
     - run: 
         name: Run ansible lint
-        command: find ./ansible -type f -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
+        command: find <<parameters.config>> -type f -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
+  ansible-playbook-syntax:
+    description: Run ansible-playbook syntax check
+    executor: default
+    parameters:
+      dir:
+        default: .
+        description: Specify a custom ansible-lint config
+      depth:
+        default: 10
+        description: Specify maxdepth when looking for file(s)
+        type: string
+    steps:
+    - run: 
+        name: Install packages needed
+        command: apk --no-cache add python3 ansible-lint
+    - checkout
+    - run: 
+        name: Check ansible lint version
+        command: ansible-lint --version
+    - run: 
+        name: "Check ansible-playbook syntax"
+        command: find <<parameters.dir>> -type f -maxdepth <<parameters.depth>> -name '*.yml' | xargs ansible-playbook --syntax-check
+
