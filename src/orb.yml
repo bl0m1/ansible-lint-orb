@@ -29,8 +29,8 @@ jobs:
         condition: <<parameters.config>>
         steps:
           - run: 
-            name: Run ansible lint
-            command: find ./ansible -type f -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
+              name: Run ansible lint
+              command: find ./ansible -type f -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
     - unless:
         condition: <<parameters.config>>
         steps:
