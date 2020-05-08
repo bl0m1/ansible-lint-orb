@@ -14,11 +14,10 @@ jobs:
     description: Run ansible lint
     executor: default
     parameters:
-        config:
-          default: ~/project
-          description: Path to the directory containing your package.json file. Not
-            needed if package.json lives in the root.
-          type: string
+      config:
+        default: ~/project
+        description: Specify a custom ansible-lint config
+        type: string
     steps:
     - run: 
         name: Install packages needed
