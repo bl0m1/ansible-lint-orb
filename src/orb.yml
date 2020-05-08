@@ -9,7 +9,7 @@ executors:
     docker:
     - image: alpine:latest
 
-jobs:
+commands:
   ansible-lint:
     description: Run ansible lint
     executor: default
