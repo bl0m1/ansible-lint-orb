@@ -24,14 +24,14 @@ jobs:
     steps:
     - run: 
         name: Install packages needed
-        command: apk --no-cache add python3 ansible-lint
+        command: apk --no-cache add ansible-lint
     - checkout
     - run: 
         name: Check ansible lint version
         command: ansible-lint --version
     - run: 
         name: Run ansible lint
-        command: find <<parameters.config>> -type f -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
+        command: find <<parameters.dir>> -type f -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
   ansible-playbook-syntax:
     description: Run ansible-playbook syntax check
     executor: default
@@ -43,11 +43,11 @@ jobs:
       depth:
         default: 10
         description: Specify maxdepth when looking for file(s)
-        type: string
+        type: integer
     steps:
     - run: 
         name: Install packages needed
-        command: apk --no-cache add python3 ansible-lint
+        command: apk --no-cache add ansible-lint
     - checkout
     - run: 
         name: Check ansible lint version

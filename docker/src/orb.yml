@@ -1,0 +1,30 @@
+version: 2.1
+
+description: |
+  Simplify docker
+executors:
+  default:
+    description: |
+      Custom Docker image
+    docker:
+    - image: hadolint/hadolint
+
+jobs:
+  lint:
+    description: Run docker lint
+    executor: default
+    working_directory: /root/project
+    parameters:
+      dir:
+        default: .
+        description: Specify in which directory to run the lint
+        type: string
+      depth:
+        default: 10
+        description: Specify depth of search
+        type: integer
+    steps:
+      - checkout
+      - run: 
+          name: Run hadolint on dockerfile
+          command: find <<parameters.dir>> -type f -maxdepth <<parameters.depth>> -name 'Dockerfile' | xargs hadolint

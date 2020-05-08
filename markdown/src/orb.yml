@@ -1,0 +1,36 @@
+version: 2.1
+
+description: |
+  Simplify markdown
+executors:
+  default:
+    description: |
+      Custom Docker image with pre-packaged welcome orb commands
+    docker:
+      - image: alpine:latest
+
+jobs:
+  lint:
+    description: Run markdown lint
+    working_directory: /root/project
+    executor: default
+    parameters:
+      dir:
+        default: .
+        description: Specify in which  directory to run the lint
+        type: string
+      depth:
+        default: 10
+        description: Specify depth of search
+        type: integer
+    steps:
+    - run: 
+        name: Install md-proofer
+        command: |
+            apk add --update nodejs npm
+            npm install -g markdownlint-cli
+    - checkout
+    - run: 
+        name: Test Markdown Files
+        command: find <<parameters.dir>> -type f -name '*.md' -maxdepth <<parameters.depth>> | xargs markdownlint
+ 
