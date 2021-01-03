@@ -31,7 +31,7 @@ jobs:
         command: ansible-lint --version
     - run: 
         name: Run ansible lint
-        command: find <<parameters.dir>> -type f -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
+        command: find <<parameters.dir>> -type f -maxdepth <<parameters.depth>> -name '*.yml' | xargs ansible-lint -c <<parameters.config>>
   ansible-playbook-syntax:
     description: Run ansible-playbook syntax check
     executor: default
